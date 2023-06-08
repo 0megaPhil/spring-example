@@ -47,9 +47,7 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>sdk</id>
+
       <build>
         <plugins>
           <plugin>
@@ -73,9 +71,7 @@
           <plugin>
             <groupId>org.openapitools</groupId>
             <artifactId>openapi-generator-maven-plugin</artifactId>
-            <!-- RELEASE_VERSION -->
             <version>6.6.0</version>
-            <!-- /RELEASE_VERSION -->
             <executions>
               <execution>
                 <id>Inventory</id>
@@ -83,7 +79,7 @@
                   <goal>generate</goal>
                 </goals>
                 <configuration>
-                  <inputSpec>http://localhost:8080/v3/api-docs</inputSpec>
+                  <inputSpec>example-app/src/main/resources/api-docs</inputSpec>
                   <templateDirectory>${project.basedir}/src/main/resources/template</templateDirectory>
                   <generatorName>spring</generatorName>
                   <library>spring-boot</library>
@@ -102,7 +98,6 @@
                     <reactive>true</reactive>
                     <useResponseEntity>false</useResponseEntity>
                     <interfaceOnly>true</interfaceOnly>
-                    <!--										<delegatePattern>false</delegatePattern>-->
                     <skipDefaultInterface>true</skipDefaultInterface>
                     <serializableModel>true</serializableModel>
                   </configOptions>
@@ -112,7 +107,5 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-  </profiles>
 
 </project>
