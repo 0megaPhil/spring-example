@@ -30,6 +30,21 @@
       <version>3.24.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.github.resilience4j</groupId>
+      <artifactId>resilience4j-all</artifactId>
+      <version>2.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>4.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.projectreactor.addons</groupId>
+      <artifactId>reactor-extra</artifactId>
+      <version>3.5.1</version>
+    </dependency>
   </dependencies>
 
   <profiles>
@@ -89,7 +104,7 @@
                     <interfaceOnly>true</interfaceOnly>
                     <!--										<delegatePattern>false</delegatePattern>-->
                     <skipDefaultInterface>true</skipDefaultInterface>
-                    <!--										<serializableModel>true</serializableModel>-->
+                    <serializableModel>true</serializableModel>
                   </configOptions>
                 </configuration>
               </execution>

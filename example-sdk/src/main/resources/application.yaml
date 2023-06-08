@@ -1,3 +1,16 @@
+spring:
+  main:
+    web-application-type: reactive
 server:
   host: localhost
-  port: 8080
+  port: 8081
+resilience4j.ratelimiter:
+  instances:
+    basic:
+      limitForPeriod: 1
+      limitRefreshPeriod: 1s
+  metrics:
+    enabled: true
+  configs:
+    default:
+      registerHealthIndicator: true
