@@ -1,0 +1,7 @@
+security:
+  basic:
+    enable: false
+  ignored: /**
+server:
+  host: localhost
+  port: 8080
