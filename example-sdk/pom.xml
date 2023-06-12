@@ -12,100 +12,110 @@
   <artifactId>example-sdk</artifactId>
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sdk.api.base-package>${project.groupId}.sdk</sdk.api.base-package>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.arryved</groupId>
       <artifactId>example-app</artifactId>
-      <version>${project.version}</version>
       <classifier>classes</classifier>
     </dependency>
     <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>3.24.2</version>
-      <scope>test</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-actuator-autoconfigure</artifactId>
     </dependency>
     <dependency>
       <groupId>io.github.resilience4j</groupId>
       <artifactId>resilience4j-all</artifactId>
-      <version>2.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.awaitility</groupId>
-      <artifactId>awaitility</artifactId>
-      <version>4.2.0</version>
     </dependency>
     <dependency>
       <groupId>io.projectreactor.addons</groupId>
       <artifactId>reactor-extra</artifactId>
-      <version>3.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-webflux-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
-
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.4.0</version>
-            <executions>
-              <execution>
-                <phase>compile</phase>
-                <goals>
-                  <goal>add-source</goal>
-                </goals>
-                <configuration>
-                  <sources>
-                    <source>${project.build.directory}/generated-sources/openapi</source>
-                  </sources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.openapitools</groupId>
-            <artifactId>openapi-generator-maven-plugin</artifactId>
-            <version>6.6.0</version>
-            <executions>
-              <execution>
-                <id>Inventory</id>
-                <goals>
-                  <goal>generate</goal>
-                </goals>
-                <configuration>
-                  <inputSpec>example-app/src/main/resources/api-docs</inputSpec>
-                  <templateDirectory>${project.basedir}/src/main/resources/template</templateDirectory>
-                  <generatorName>spring</generatorName>
-                  <library>spring-boot</library>
-                  <generateSupportingFiles>false</generateSupportingFiles>
-                  <generateModels>true</generateModels>
-                  <generateApiTests>false</generateApiTests>
-                  <configOptions>
-                    <useSpringBoot3>true</useSpringBoot3>
-                    <controllerPackage>${sdk.api.base-package}.controller</controllerPackage>
-                    <sourceFolder>src/main/java</sourceFolder>
-                    <apiPackage>${sdk.api.base-package}.api</apiPackage>
-                    <modelPackage>${sdk.api.base-package}.models</modelPackage>
-                    <packageName>${sdk.api.base-package}</packageName>
-                    <invokerPackage>${sdk.api.base-package}.client</invokerPackage>
-                    <useSpringController>true</useSpringController>
-                    <reactive>true</reactive>
-                    <useResponseEntity>false</useResponseEntity>
-                    <interfaceOnly>true</interfaceOnly>
-                    <skipDefaultInterface>true</skipDefaultInterface>
-                    <serializableModel>true</serializableModel>
-                  </configOptions>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/openapi</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Inventory</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>example-app/src/main/resources/api-docs</inputSpec>
+              <templateDirectory>${project.basedir}/src/main/resources/template</templateDirectory>
+              <generatorName>spring</generatorName>
+              <library>spring-boot</library>
+              <generateSupportingFiles>false</generateSupportingFiles>
+              <generateModels>true</generateModels>
+              <generateApiTests>false</generateApiTests>
+              <configOptions>
+                <useSpringBoot3>true</useSpringBoot3>
+                <controllerPackage>${sdk.api.base-package}.controller</controllerPackage>
+                <sourceFolder>src/main/java</sourceFolder>
+                <apiPackage>${sdk.api.base-package}.api</apiPackage>
+                <modelPackage>${sdk.api.base-package}.models</modelPackage>
+                <packageName>${sdk.api.base-package}</packageName>
+                <invokerPackage>${sdk.api.base-package}.client</invokerPackage>
+                <useSpringController>true</useSpringController>
+                <reactive>true</reactive>
+                <useResponseEntity>false</useResponseEntity>
+                <interfaceOnly>true</interfaceOnly>
+                <skipDefaultInterface>true</skipDefaultInterface>
+                <serializableModel>true</serializableModel>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

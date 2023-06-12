@@ -1,5 +1,6 @@
 package com.arryved.example;
 
+import com.arryved.core.AbstractController;
 import com.arryved.example.models.EchoRequest;
 import com.arryved.example.models.EchoResponse;
 import org.springframework.http.MediaType;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class ExampleController {
+public class ExampleController extends AbstractController {
   private final ExampleService exampleService;
   
   public ExampleController(ExampleService exampleService) {

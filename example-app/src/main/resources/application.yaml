@@ -1,6 +1,11 @@
 spring:
   main:
     web-application-type: reactive
+  cloud:
+    gcp:
+      spanner:
+        instance-id: example-spanner
+        database: example
 security:
   basic:
     enable: false

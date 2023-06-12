@@ -1,8 +1,8 @@
 package com.arryved.example.models;
 
-import java.io.Serializable;
+import com.arryved.core.AbstractModel;
+import com.arryved.example.data.Echo;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +11,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EchoResponse implements Serializable {
-  private String echo;
+public class EchoResponse extends AbstractModel {
+  private Echo echo;
 }

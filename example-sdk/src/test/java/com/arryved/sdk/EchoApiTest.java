@@ -40,7 +40,7 @@ public class EchoApiTest {
           Assertions.assertThat(m).isNotNull();
           Assertions.assertThat(m.getEcho()).isNotEmpty();
         });
-    await().atMost(Duration.ofSeconds(30)).until(disposable::isDisposed);
+    await().atMost(Duration.ofSeconds(60)).until(disposable::isDisposed);
   }
   
   Flux<Mono<EchoRequest>> reqFlux = Flux.generate(() -> Instant.now().toString(),
@@ -52,7 +52,7 @@ public class EchoApiTest {
   Flux<EchoResponse> echoResponseProcessor(Flux<Mono<EchoRequest>> reqFlux) {
     return reqFlux
         .flatMap(r -> echoApi.echo(r).retryWhen(reactor.util.retry.Retry
-            .backoff(100, Duration.ofMillis(1000)).jitter(0d)
+            .backoff(2, Duration.ofMillis(1000)).jitter(0d)
             .doAfterRetry(rs -> System.out.println("retried at " + LocalTime.now() + ", attempt " + rs.totalRetries()))
             .onRetryExhaustedThrow((spec, rs) -> rs.failure())
         ).doOnError(e -> System.out.println(e.getMessage())));
