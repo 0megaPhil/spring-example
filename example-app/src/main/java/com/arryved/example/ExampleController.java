@@ -24,18 +24,18 @@ public class ExampleController extends AbstractController {
     this.exampleService = exampleService;
   }
   
-  @PostMapping(value = "/echo", consumes = MediaType.ALL_VALUE)
+  @PostMapping(value = "/echo", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Mono<EchoResponse> echo(@RequestBody EchoRequest request, @RequestParam(required = false) String prefix) {
     return exampleService.exchangeEcho(new EchoRequest(new Echo(Optional.ofNullable(prefix)
         .orElse("") + request.getEcho().getMessage())));
   }
   
-  @PostMapping(value = "/echo/yell", consumes = MediaType.ALL_VALUE)
+  @PostMapping(value = "/echo/yell", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Mono<YellResponse> yell(@RequestBody YellRequest request) {
     return exampleService.exchangeYell(request);
   }
   
-  @PostMapping(value = "/echo/whisper", consumes = MediaType.ALL_VALUE)
+  @PostMapping(value = "/echo/whisper", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Mono<WhisperResponse> whisper(@RequestBody WhisperRequest request) {
     return exampleService.exchangeWhisper(request);
   }
