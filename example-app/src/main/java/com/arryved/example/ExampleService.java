@@ -29,12 +29,14 @@ public class ExampleService extends AbstractService<Echo> {
   
   @RateLimiter(name = "impolite")
   public Mono<YellResponse> exchangeYell(YellRequest request) {
-    return processor.chainAppender(Mono.defer(() -> Mono.just(new YellResponse(request.getEcho()))));
+    return processor.chainAppender(Mono.defer(() -> Mono.just(
+        new YellResponse(new Echo(request.getEcho().getMessage().toUpperCase())))));
   }
   
   @RateLimiter(name = "polite")
   public Mono<WhisperResponse> exchangeWhisper(WhisperRequest request) {
-    return processor.chainAppender(Mono.defer(() -> Mono.just(new WhisperResponse(request.getEcho()))));
+    return processor.chainAppender(Mono.defer(() -> Mono.just(
+        new WhisperResponse(new Echo(request.getEcho().getMessage().toLowerCase())))));
   }
 
 }
