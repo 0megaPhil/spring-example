@@ -11,7 +11,7 @@ public class ExampleEchoListener extends AbstractListener {
   public ExampleEchoListener(ScheduledExecutorService scheduledExecutorService) {
     super();
     scheduledExecutorService
-        .scheduleAtFixedRate(this::logStats, 1, 1, TimeUnit.SECONDS);
+        .scheduleAtFixedRate(this::logStats, 5, 1, TimeUnit.SECONDS);
   }
   
   @Override

@@ -6,10 +6,12 @@ import com.arryved.sdk.models.EchoResponse;
 import java.time.Duration;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 
-public class EchoApiTest extends ExampleBase {
+@ActiveProfiles(profiles = "throttle-high")
+public class EchoApiThrottleHighTest extends ExampleBase {
   
   @Test
   void echoAsync() {

@@ -1,28 +1,19 @@
 spring:
   main:
     web-application-type: reactive
-  cloud:
-    gcp:
-      spanner:
-        instance-id: example-spanner
-        database: example
-security:
-  basic:
-    enable: false
-  ignored: /**
 server:
   host: localhost
-  port: 8080
+  port: 8083
 resilience4j.ratelimiter:
   instances:
     basic:
-      limitForPeriod: 5
+      limitForPeriod: 100
       limitRefreshPeriod: 1s
     polite:
-      limitForPeriod: 5
+      limitForPeriod: 100
       limitRefreshPeriod: 1s
     impolite:
-      limitForPeriod: 5
+      limitForPeriod: 100
       limitRefreshPeriod: 1s
   metrics:
     enabled: true
@@ -31,6 +22,7 @@ resilience4j.ratelimiter:
       registerHealthIndicator: true
 logging:
   level:
+    root: OFF
     io:
       github:
         resilience4j:
@@ -42,3 +34,4 @@ logging:
             web:
               reactive:
                 error: OFF
+

@@ -23,12 +23,7 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>spring-cloud-gcp-data-spanner</artifactId>
-      <version>4.4.0</version>
     </dependency>
-    <!--    <dependency>-->
-<!--      <groupId>com.google.cloud</groupId>-->
-<!--      <artifactId>spring-cloud-gcp-starter-data-spanner</artifactId>-->
-<!--    </dependency>-->
   </dependencies>
 
 </project>

@@ -12,6 +12,9 @@ resilience4j.ratelimiter:
     polite:
       limitForPeriod: 1000000
       limitRefreshPeriod: 1s
+    impolite:
+      limitForPeriod: 1000000
+      limitRefreshPeriod: 1s
   metrics:
     enabled: true
   configs:

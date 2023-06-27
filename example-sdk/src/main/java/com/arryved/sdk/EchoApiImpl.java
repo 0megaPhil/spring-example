@@ -3,12 +3,19 @@ package com.arryved.sdk;
 import com.arryved.sdk.api.EchoApi;
 import com.arryved.sdk.models.EchoRequest;
 import com.arryved.sdk.models.EchoResponse;
+import com.arryved.sdk.models.WhisperRequest;
+import com.arryved.sdk.models.WhisperResponse;
 import com.arryved.sdk.models.YellRequest;
 import com.arryved.sdk.models.YellResponse;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -32,24 +39,46 @@ public class EchoApiImpl implements EchoApi {
         .build();
   }
   
-  @Override
   public Mono<EchoResponse> echo(Mono<EchoRequest> echoRequest) {
-    return echoRequest.flatMap(req ->
-        client.post()
-            .uri("/echo")
-            .body(BodyInserters.fromProducer(echoRequest, EchoRequest.class))
-            .retrieve()
-            .bodyToMono(EchoResponse.class));
+    return echo(echoRequest, null);
+  }
+  
+  @Override
+  public Mono<EchoResponse> echo(Mono<EchoRequest> echoRequest, String prefix) {
+    return exchange(EchoRequest.class, EchoResponse.class, "/echo",
+        Optional.ofNullable(prefix).map(p -> {
+          MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+          params.put("prefix", List.of(prefix));
+          return params;
+        }).orElseGet(LinkedMultiValueMap::new)).apply(echoRequest);
+  }
+  
+  @Override
+  public Mono<WhisperResponse> whisper(Mono<WhisperRequest> whisperRequest) {
+    return exchange(WhisperRequest.class, WhisperResponse.class, "/echo/whisper", null).apply(whisperRequest);
   }
   
   @Override
   public Mono<YellResponse> yell(Mono<YellRequest> yellRequest) {
-    return yellRequest.flatMap(req ->
-        client.post()
-            .uri("/echo/yell")
-            .body(BodyInserters.fromProducer(yellRequest, YellRequest.class))
-            .retrieve()
-            .bodyToMono(YellResponse.class));
+    return exchange(YellRequest.class, YellResponse.class, "/echo/yell", null).apply(yellRequest);
+  }
+  
+  private <S, R> Function<Mono<S>, Mono<R>> exchange(
+      Class<S> requestClass,
+      Class<R> responseClass,
+      String uri,
+      MultiValueMap<String, String> params) {
+    return mono -> mono.flatMap(req -> client.post()
+        .uri(uriBuilder -> {
+          URI uri1 = uriBuilder
+              .path(uri)
+//              .queryParams(params)
+              .build();
+          return uri1;
+        })
+        .body(BodyInserters.fromProducer(mono, requestClass))
+        .retrieve()
+        .bodyToMono(responseClass));
   }
   
 }

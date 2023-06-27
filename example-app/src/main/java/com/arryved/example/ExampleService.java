@@ -4,6 +4,8 @@ import com.arryved.core.AbstractService;
 import com.arryved.example.data.Echo;
 import com.arryved.example.models.EchoRequest;
 import com.arryved.example.models.EchoResponse;
+import com.arryved.example.models.WhisperRequest;
+import com.arryved.example.models.WhisperResponse;
 import com.arryved.example.models.YellRequest;
 import com.arryved.example.models.YellResponse;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -25,9 +27,14 @@ public class ExampleService extends AbstractService<Echo> {
     return processor.chainAppender(Mono.defer(() -> Mono.just(new EchoResponse(request.getEcho()))));
   }
   
-  @RateLimiter(name = "polite")
+  @RateLimiter(name = "impolite")
   public Mono<YellResponse> exchangeYell(YellRequest request) {
     return processor.chainAppender(Mono.defer(() -> Mono.just(new YellResponse(request.getEcho()))));
+  }
+  
+  @RateLimiter(name = "polite")
+  public Mono<WhisperResponse> exchangeWhisper(WhisperRequest request) {
+    return processor.chainAppender(Mono.defer(() -> Mono.just(new WhisperResponse(request.getEcho()))));
   }
 
 }

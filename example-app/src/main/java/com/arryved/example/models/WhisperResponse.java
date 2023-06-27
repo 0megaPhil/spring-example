@@ -11,6 +11,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EchoResponse extends AbstractModel {
+public class WhisperResponse extends AbstractModel {
   private Echo echo;
 }

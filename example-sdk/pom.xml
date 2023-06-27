@@ -89,7 +89,8 @@
               <goal>generate</goal>
             </goals>
             <configuration>
-              <inputSpec>example-app/src/main/resources/api-docs</inputSpec>
+<!--              <inputSpec>example-app/src/main/resources/api-docs</inputSpec>-->
+              <inputSpec>http://localhost:8080/v3/api-docs</inputSpec>
               <templateDirectory>${project.basedir}/src/main/resources/template</templateDirectory>
               <generatorName>spring</generatorName>
               <library>spring-boot</library>
