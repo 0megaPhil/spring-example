@@ -5,4 +5,5 @@ public interface Listener {
   <T> void success(T obj);
   <T> void error(T obj);
   <T> void complete(T obj);
+  void logStats();
 }

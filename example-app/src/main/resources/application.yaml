@@ -16,10 +16,26 @@ server:
 resilience4j.ratelimiter:
   instances:
     basic:
-      limitForPeriod: 1
+      limitForPeriod: 5
+      limitRefreshPeriod: 1s
+    polite:
+      limitForPeriod: 2
       limitRefreshPeriod: 1s
   metrics:
     enabled: true
   configs:
     default:
       registerHealthIndicator: true
+logging:
+  level:
+    io:
+      github:
+        resilience4j:
+          ratelimiter: OFF
+    org:
+      springframework:
+        boot:
+          autoconfigure:
+            web:
+              reactive:
+                error: OFF

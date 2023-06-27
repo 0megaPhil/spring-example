@@ -1,7 +1,9 @@
-package com.arryved.example;
+package com.arryved.example.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import com.arryved.example.ExampleProcessor;
+import com.arryved.example.ExampleService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,7 +16,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebFluxSecurity
-public class ExampleSecurityConfiguration {
+public class ExampleSecurityConfig {
   
   private static final String[] AUTH_WHITELIST = {
       // -- swagger ui
@@ -50,8 +52,8 @@ public class ExampleSecurityConfiguration {
   }
   
   @Bean
-  public ExampleService exampleService() {
-    return new ExampleService();
+  public ExampleService exampleService(ExampleProcessor processor) {
+    return new ExampleService(processor);
   }
   
 }

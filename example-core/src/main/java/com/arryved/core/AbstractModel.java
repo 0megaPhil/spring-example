@@ -1,5 +1,6 @@
 package com.arryved.core;
 
-public abstract class AbstractModel implements Model {
+import java.util.UUID;
 
+public abstract class AbstractModel implements Model {
 }
