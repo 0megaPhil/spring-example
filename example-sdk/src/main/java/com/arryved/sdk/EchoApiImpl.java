@@ -7,9 +7,7 @@ import com.arryved.sdk.models.WhisperRequest;
 import com.arryved.sdk.models.WhisperResponse;
 import com.arryved.sdk.models.YellRequest;
 import com.arryved.sdk.models.YellResponse;
-import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import org.springframework.http.HttpStatus;
@@ -69,13 +67,7 @@ public class EchoApiImpl implements EchoApi {
       String uri,
       MultiValueMap<String, String> params) {
     return mono -> mono.flatMap(req -> client.post()
-        .uri(uriBuilder -> {
-          URI uri1 = uriBuilder
-              .path(uri)
-//              .queryParams(params)
-              .build();
-          return uri1;
-        })
+        .uri(uriBuilder -> uriBuilder.path(uri).queryParams(params).build())
         .body(BodyInserters.fromProducer(mono, requestClass))
         .retrieve()
         .bodyToMono(responseClass));

@@ -4,12 +4,27 @@ import static org.awaitility.Awaitility.await;
 
 import com.arryved.sdk.models.EchoResponse;
 import java.time.Duration;
+import java.util.Random;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 
 public class EchoApiTest extends ExampleBase {
+  
+  @Test
+  void fluxed() {
+    Flux<Integer> integerFlux = Flux.fromStream(() -> Stream.of(1, 2, 3, 4, 5, 6))
+        .share().delayElements(Duration.ofMillis(new Random().nextInt(1000)));
+    Flux<String> stringFlux = integerFlux.map(String::valueOf).publish().autoConnect();
+    Flux<Long> longFlux = integerFlux.map(Long::valueOf).publish().autoConnect();
+    
+    Flux<?> combined = Flux.merge(stringFlux, longFlux);
+    
+    Disposable disposable = combined.take(Duration.ofSeconds(300))
+        .subscribe(o -> System.out.println(o.getClass() + ": " + o));
+    await().atMost(Duration.ofSeconds(30)).until(disposable::isDisposed);
+  }
   
   @Test
   void echoAsync() {

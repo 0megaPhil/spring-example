@@ -9,6 +9,8 @@ import com.arryved.example.models.WhisperResponse;
 import com.arryved.example.models.YellRequest;
 import com.arryved.example.models.YellResponse;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import java.time.Duration;
+import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
 import reactor.core.publisher.Mono;
@@ -24,7 +26,8 @@ public class ExampleService extends AbstractService<Echo> {
   
   @RateLimiter(name = "basic")
   public Mono<EchoResponse> exchangeEcho(EchoRequest request) {
-    return processor.chainAppender(Mono.defer(() -> Mono.just(new EchoResponse(request.getEcho()))));
+    return processor.chainAppender(Mono.defer(() ->
+        Mono.just(new EchoResponse(request.getEcho()))));
   }
   
   @RateLimiter(name = "impolite")
